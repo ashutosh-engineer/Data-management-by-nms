@@ -1,38 +1,91 @@
+/* App container */
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main content container */
+main {
+  flex: 1;
+}
+
+/* Loading spinner */
+.loading-spinner {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.spinner-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: var(--primary-main, #2A5F7A);
+  border-left-color: var(--secondary-main, #E87D51);
+  animation: spin 1s linear infinite;
+}
+
+.spinner-text {
+  margin-top: 1rem;
+  color: var(--neutral-600, #6B7280);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px; /* Adjust based on your navbar height */
+}
+
+/* Section transitions */
+section {
+  transition: opacity 0.5s ease;
+}
+
+/* Active navigation link indicator */
+.nav-link.active:after {
+  width: 100%;
+}
+
+/* Back to top button */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 40px;
+  height: 40px;
+  background-color: var(--primary-main, #2A5F7A);
   color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 90;
 }
 
-.App-link {
-  color: #61dafb;
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.back-to-top:hover {
+  transform: translateY(-3px);
+  background-color: var(--primary-dark, #1F4559);
 }
