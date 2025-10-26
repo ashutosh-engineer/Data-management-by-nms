@@ -3,10 +3,10 @@ import styled from 'styled-components';
 
 const Nav = styled.nav`
   padding: 1rem 0;
-  box-shadow: none;
   transition: all 0.3s ease;
-  background-color: transparent;
-  position: absolute;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -14,12 +14,14 @@ const Nav = styled.nav`
   height: 80px;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   
   ${props => props.$scrolled && `
-    background-color: rgba(0, 0, 0, 0.9);
-    position: fixed;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(15, 32, 39, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     height: 70px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   `}
 `;
 
@@ -40,19 +42,25 @@ const Logo = styled.a`
   text-decoration: none;
   display: flex;
   align-items: center;
+  transition: all 0.3s ease;
   
   &:hover {
     text-decoration: none;
+    transform: translateY(-2px);
   }
 `;
 
 const LogoText = styled.span`
   font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 0%, #E87D51 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 `;
 
 const LogoSoft = styled.span`
-  opacity: 0.7;
-  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
   font-size: 1rem;
   margin-left: 0.5rem;
 `;
@@ -186,16 +194,18 @@ const NavLink = styled.a`
 `;
 
 const NavLinkCTA = styled(NavLink)`
-  background-color: var(--secondary-main, #E87D51);
+  background: linear-gradient(135deg, #E87D51 0%, #F9A825 100%);
   color: white;
   padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  border-radius: 50px;
   opacity: 1;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(232, 125, 81, 0.3);
   
   &:hover {
-    background-color: var(--secondary-dark, #C25E34);
     transform: translateY(-2px);
     color: white;
+    box-shadow: 0 6px 20px rgba(232, 125, 81, 0.5);
   }
   
   &::after {

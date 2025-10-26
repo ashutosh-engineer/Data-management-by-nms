@@ -1,5 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const gradientAnimation = keyframes`
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+`;
 
 const HeroSection = styled.section`
   padding: 0;
@@ -9,6 +15,9 @@ const HeroSection = styled.section`
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1a1f3a);
+  background-size: 400% 400%;
+  animation: ${gradientAnimation} 15s ease infinite;
   
   &::before {
     content: '';
@@ -17,21 +26,22 @@ const HeroSection = styled.section`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.6) 100%);
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(232, 125, 81, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(42, 95, 122, 0.15) 0%, transparent 50%);
     z-index: 1;
   }
-`;
-
-const BackgroundImage = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('/hero-image.jpg');
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.7) contrast(1.2);
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(to top, rgba(255,255,255,1) 0%, transparent 100%);
+    z-index: 2;
+  }
 `;
 
 const Container = styled.div`
@@ -39,7 +49,7 @@ const Container = styled.div`
   width: 100%;
   padding: 0 2rem;
   position: relative;
-  z-index: 2;
+  z-index: 3;
   text-align: center;
   
   @media (max-width: 768px) {
@@ -48,53 +58,69 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
 `;
 
+const Badge = styled.div`
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+    padding: 0.4rem 1.2rem;
+  }
+`;
+
 const Headline = styled.h1`
-  font-size: 4.8rem;
+  font-size: 5.5rem;
   font-weight: 900;
-  line-height: 1.2;
+  line-height: 1.1;
   margin-bottom: 1.5rem;
   color: #ffffff;
-  letter-spacing: -0.025em;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  letter-spacing: -0.03em;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   
   span {
-    color: var(--secondary-main, #E87D51);
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    background: linear-gradient(135deg, #E87D51 0%, #F9A825 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     position: relative;
     display: inline-block;
-    
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -8px;
-      width: 100%;
-      height: 4px;
-      background-color: var(--secondary-main, #E87D51);
-      box-shadow: 0 2px 8px rgba(232, 125, 81, 0.6);
-    }
   }
   
   @media (max-width: 768px) {
-    font-size: 2.8rem;
+    font-size: 2.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 2rem;
   }
 `;
 
 const Description = styled.p`
-  font-size: 1.5rem;
-  color: #ffffff;
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 3rem;
-  line-height: 1.6;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-  opacity: 0.95;
+  line-height: 1.7;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  font-weight: 400;
   
   @media (max-width: 768px) {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
+    font-size: 1.15rem;
+    margin-bottom: 2.5rem;
   }
 `;
 
@@ -177,43 +203,41 @@ const SecondaryButton = styled.a`
 `;
 
 function Hero() {
-  // Function to contact via WhatsApp
   const handleContactClick = (e) => {
     e.preventDefault();
-    
-    // Check if the device is mobile
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    // Professional message for WhatsApp
     const message = "Hello NMS Softwares, I'm interested in learning more about your ManageDay data management solution. Could you provide additional information?";
     const encodedMessage = encodeURIComponent(message);
-    
-    // Set the appropriate WhatsApp URL based on device
     const whatsappUrl = isMobile
       ? `https://wa.me/919558466409?text=${encodedMessage}`
       : `https://web.whatsapp.com/send?phone=919558466409&text=${encodedMessage}`;
-    
-    // Open the WhatsApp link in a new tab
     window.open(whatsappUrl, '_blank');
+  };
+
+  const handleLearnMore = () => {
+    const element = document.getElementById('product');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
     <HeroSection>
-      <BackgroundImage />
       <Container>
         <Content>
+          <Badge>🚀 Enterprise Data Management Platform</Badge>
           <Headline>
-            <span>ManageDay:</span> Enterprise Data Management Solution
+            Transform Your Data into <span>Strategic Assets</span>
           </Headline>
           <Description>
-            Securely manage, structure, and analyze customer data for enterprises with complex B2B2C relationships.
+            Empower your enterprise with ManageDay—a cutting-edge data management solution designed for businesses with complex B2B2C relationships. Secure, scalable, and intelligent.
           </Description>
           <ButtonGroup>
             <PrimaryButton onClick={handleContactClick}>
-              Request Demo
+              Request a Demo
             </PrimaryButton>
-            <SecondaryButton href="#">
-              Learn More
+            <SecondaryButton href="#product" onClick={(e) => { e.preventDefault(); handleLearnMore(); }}>
+              Explore Features
             </SecondaryButton>
           </ButtonGroup>
         </Content>

@@ -10,10 +10,12 @@ import './App.css';
 
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import Features from './components/Features';
+import CustomSolutions from './components/CustomSolutions';
 
 // Lazy loaded components for better performance
 const Customers = lazy(() => import('./components/Customers'));
-const CTA = lazy(() => import('./components/CTA'));
+const CTA = lazy(() => import('./components/CTANew'));
 const Footer = lazy(() => import('./components/Footer'));
 const LoginPopup = lazy(() => import('./components/LoginPopup'));
 const LoginPage = lazy(() => import('./components/LoginPage'));
@@ -100,6 +102,8 @@ const AppRoutes = () => {
             <Navbar />
             <main>
               <Hero />
+              <Features />
+              <CustomSolutions />
               <Suspense fallback={<LoadingSpinner />}>
                 <Customers />
               </Suspense>
